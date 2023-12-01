@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from './src/theme/colors';
 
 export const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: '#f5f6fa',
+    backgroundColor: COLORS.mainBackground,
   },
   container: {
     flex: 1,

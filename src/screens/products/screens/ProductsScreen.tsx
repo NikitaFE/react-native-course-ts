@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, SectionList, Text, View } from 'react-native';
-import { SvgXml } from 'react-native-svg';
+import { ActivityIndicator, View } from 'react-native';
 import { styles } from './ProductsScreen.styles';
 import { mockedProducts } from '../../../data';
-import Product from '../components/Product/Product';
-import Input from '../../../components/Input/Input';
-import searchSvg from '../../../assets/search.svg';
 import { IProductCategory } from '../../../types/IProductCategory';
+import { COLORS } from '../../../theme/colors';
+import ProductList from '../components/ProductList/ProductList';
+import ProductSearch from '../components/ProductSearch/ProductSearch';
+import ProductModal from '../components/ProductModal/ProductModal';
+import FilterModal from '../components/FilterModal/FilterModal';
+import { IProductFilters } from '../../../types/IProductFilters';
+import { FilterNamesEnum } from '../../../types/FilterNames.enum';
 
 const ProductsScreen = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isFilterModalOpened, setIsFilterModalOpened] = useState(false);
   const [isProductsLoading, setIsProductsLoading] = useState(false);
   const [products, setProducts] = useState<IProductCategory[] | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<
     IProductCategory[] | null
   >(null);
+  const [filters, setFilters] = useState<IProductFilters>({});
 
   useEffect(() => {
     setIsProductsLoading(true);
@@ -28,22 +33,38 @@ const ProductsScreen = () => {
     return () => clearTimeout(timerId);
   }, []);
 
-  const onSearchValueChange = (value: string) => {
-    const newFilteredProducts = products
-      ? products
-          .map((category) => {
-            return {
-              ...category,
-              data: category.data.filter((product) =>
-                product.title.toLowerCase().includes(value.toLowerCase())
-              ),
-            };
-          })
-          .filter((category) => category.data.length)
-      : null;
+  useEffect(() => {
+    let newFilteredProducts = products;
+
+    if (Object.keys(filters).length) {
+      for (let filter in filters) {
+        switch (filter) {
+          case FilterNamesEnum.TITLE:
+            newFilteredProducts = filterProductsByTitleSubstring(
+              newFilteredProducts,
+              filters[filter] ?? ''
+            );
+            break;
+          case FilterNamesEnum.IS_NEW:
+            newFilteredProducts = filterProductsByIsNewField(
+              newFilteredProducts,
+              filters[filter] ?? false
+            );
+            break;
+        }
+      }
+    }
 
     setFilteredProducts(newFilteredProducts);
-    setSearchValue(value);
+  }, [filters]);
+
+  const onSearchValueChange = (value: string) => {
+    if (!value) {
+      const { title, ...restFilters } = filters;
+      return setFilters(restFilters);
+    }
+
+    setFilters((filters) => ({ ...filters, title: value }));
   };
 
   const onToggleIsFavorite = (categoryId: number, productId: number) => {
@@ -69,42 +90,82 @@ const ProductsScreen = () => {
     setFilteredProducts(newFilteredProducts);
   };
 
+  const filterProductsByTitleSubstring = (
+    products: IProductCategory[] | null,
+    value: string
+  ) => {
+    const newFilteredProducts = products
+      ? products
+          .map((category) => {
+            return {
+              ...category,
+              data: category.data.filter((product) =>
+                product.title.toLowerCase().includes(value.toLowerCase())
+              ),
+            };
+          })
+          .filter((category) => category.data.length)
+      : null;
+
+    return newFilteredProducts;
+  };
+
+  const filterProductsByIsNewField = (
+    products: IProductCategory[] | null,
+    isNew: boolean
+  ) => {
+    const newFilteredProducts = products
+      ? products
+          .map((category) => {
+            return {
+              ...category,
+              data: category.data.filter((product) =>
+                isNew ? product.isNew : product
+              ),
+            };
+          })
+          .filter((category) => category.data.length)
+      : null;
+
+    return newFilteredProducts;
+  };
+
+  const onToggleIsModalOpened = (isOpened: boolean) =>
+    setIsModalOpened(isOpened);
+
+  const onToggleIsFilterModalOpened = (isOpened: boolean) =>
+    setIsFilterModalOpened(isOpened);
+
+  const onApplyFilters = (isNew: boolean) => {
+    setFilters((filters) => ({ ...filters, isNew }));
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.search}>
-        <Input
-          value={searchValue}
-          placeholder="Search"
-          onChangeText={onSearchValueChange}
-          icon={<SvgXml xml={searchSvg} width={20} height={20} />}
-        />
-      </View>
+      <ProductSearch
+        onSearchValueChange={onSearchValueChange}
+        onModalOpen={onToggleIsModalOpened}
+        onFilterModalOpen={onToggleIsFilterModalOpened}
+      />
       {isProductsLoading || !products ? (
         <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#00a8ff" />
-        </View>
-      ) : filteredProducts?.length ? (
-        <View style={styles.productsWrapper}>
-          <SectionList
-            style={styles.productList}
-            sections={filteredProducts}
-            keyExtractor={(item) => `${item.id}`}
-            renderItem={(item) => (
-              <Product
-                product={item.item}
-                categoryId={item.section.id}
-                onToggleIsFavorite={onToggleIsFavorite}
-              />
-            )}
-            renderSectionHeader={({ section: { title } }) => (
-              <Text style={styles.categoryTitle}>{title}</Text>
-            )}
-            stickySectionHeadersEnabled={false}
-          />
+          <ActivityIndicator size="large" color={COLORS.blue} />
         </View>
       ) : (
-        <Text style={styles.empty}>No products 🥲</Text>
+        <ProductList
+          products={filteredProducts}
+          onToggleIsFavorite={onToggleIsFavorite}
+        />
       )}
+      <ProductModal
+        isOpened={isModalOpened}
+        onToggleModal={onToggleIsModalOpened}
+      />
+      <FilterModal
+        isOpened={isFilterModalOpened}
+        onApplyFilter={onApplyFilters}
+        onToggleModal={onToggleIsFilterModalOpened}
+      />
     </View>
   );
 };

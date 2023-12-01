@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../../../theme/colors';
 
 export const styles = StyleSheet.create({
   product: {
@@ -7,9 +8,9 @@ export const styles = StyleSheet.create({
     gap: 16,
     marginBottom: 16,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.white,
     borderRadius: 12,
-    shadowColor: '#a8a8a8',
+    shadowColor: COLORS.defaultShadow,
     shadowOffset: {
       width: 4,
       height: 4,
@@ -29,12 +30,12 @@ export const styles = StyleSheet.create({
     right: -7,
     paddingVertical: 2,
     paddingHorizontal: 4,
-    backgroundColor: '#e84118',
+    backgroundColor: COLORS.red,
     borderRadius: 2,
   },
   newLabelText: {
     fontWeight: '700',
-    color: '#ffffff',
+    color: COLORS.white,
   },
   productDetails: {
     flex: 1,
@@ -78,11 +79,11 @@ export const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 4,
     paddingHorizontal: 10,
-    backgroundColor: '#4cd137',
+    backgroundColor: COLORS.green,
     borderRadius: 4,
   },
   buyText: {
     fontWeight: '700',
-    color: '#ffffff',
+    color: COLORS.white,
   },
 });
