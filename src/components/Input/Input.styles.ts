@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../theme/colors';
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -7,8 +8,8 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 8,
-    backgroundColor: '#ffffff',
-    shadowColor: '#a8a8a8',
+    backgroundColor: COLORS.white,
+    shadowColor: COLORS.defaultShadow,
     shadowOffset: {
       width: 4,
       height: 4,

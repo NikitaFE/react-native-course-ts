@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Alert, Image, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, Image, Text, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { styles } from './Product.styles';
 import productImagePlaceholder from '../../../../assets/product-placeholder.jpeg';
@@ -7,6 +7,7 @@ import heartSvg from '../../../../assets/heart.svg';
 import heartEmptySvg from '../../../../assets/heart-empty.svg';
 import cartSvg from '../../../../assets/cart.svg';
 import { IProduct } from '../../../../types/IProduct';
+import CustomTouchable from '../../../../components/CustomTouchable/CustomTouchable';
 
 type ProductProps = {
   product: IProduct;
@@ -39,17 +40,13 @@ const Product: FC<ProductProps> = ({
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
-          <TouchableHighlight
-            activeOpacity={0.6}
-            underlayColor="#ffffff"
-            onPress={() => onToggleIsFavorite(categoryId, id)}
-          >
+          <CustomTouchable onPress={() => onToggleIsFavorite(categoryId, id)}>
             <SvgXml
               xml={isInFavorite ? heartSvg : heartEmptySvg}
               width={28}
               height={28}
             />
-          </TouchableHighlight>
+          </CustomTouchable>
         </View>
         <View style={styles.prices}>
           <Text style={styles.price}>${price}</Text>
@@ -61,16 +58,14 @@ const Product: FC<ProductProps> = ({
           <Text style={styles.description} numberOfLines={1}>
             {description}
           </Text>
-          <TouchableHighlight
-            activeOpacity={0.6}
-            underlayColor="#ffffff"
+          <CustomTouchable
             onPress={() => Alert.alert(`${title} successfully added to cart!`)}
           >
             <View style={styles.buyButton}>
               <Text style={styles.buyText}>Buy</Text>
               <SvgXml xml={cartSvg} width={20} height={20} />
             </View>
-          </TouchableHighlight>
+          </CustomTouchable>
         </View>
       </View>
     </View>
