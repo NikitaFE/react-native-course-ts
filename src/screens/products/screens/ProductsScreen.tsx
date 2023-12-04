@@ -9,7 +9,6 @@ import ProductSearch from '../components/ProductSearch/ProductSearch';
 import ProductModal from '../components/ProductModal/ProductModal';
 import FilterModal from '../components/FilterModal/FilterModal';
 import { IProductFilters } from '../../../types/IProductFilters';
-import { FilterNamesEnum } from '../../../types/FilterNames.enum';
 
 const ProductsScreen = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -33,38 +32,19 @@ const ProductsScreen = () => {
     return () => clearTimeout(timerId);
   }, []);
 
-  useEffect(() => {
-    let newFilteredProducts = products;
-
-    if (Object.keys(filters).length) {
-      for (let filter in filters) {
-        switch (filter) {
-          case FilterNamesEnum.TITLE:
-            newFilteredProducts = filterProductsByTitleSubstring(
-              newFilteredProducts,
-              filters[filter] ?? ''
-            );
-            break;
-          case FilterNamesEnum.IS_NEW:
-            newFilteredProducts = filterProductsByIsNewField(
-              newFilteredProducts,
-              filters[filter] ?? false
-            );
-            break;
-        }
-      }
-    }
-
-    setFilteredProducts(newFilteredProducts);
-  }, [filters]);
-
   const onSearchValueChange = (value: string) => {
     if (!value) {
       const { title, ...restFilters } = filters;
+      filterProducts(restFilters);
       return setFilters(restFilters);
     }
 
-    setFilters((filters) => ({ ...filters, title: value }));
+    setFilters((filters) => {
+      const newFilters = { ...filters, title: value };
+
+      filterProducts(newFilters);
+      return newFilters;
+    });
   };
 
   const onToggleIsFavorite = (categoryId: number, productId: number) => {
@@ -90,44 +70,27 @@ const ProductsScreen = () => {
     setFilteredProducts(newFilteredProducts);
   };
 
-  const filterProductsByTitleSubstring = (
-    products: IProductCategory[] | null,
-    value: string
-  ) => {
+  const filterProducts = (filters: IProductFilters) => {
     const newFilteredProducts = products
       ? products
-          .map((category) => {
-            return {
-              ...category,
-              data: category.data.filter((product) =>
-                product.title.toLowerCase().includes(value.toLowerCase())
-              ),
-            };
-          })
+          .map((category) => ({
+            ...category,
+            data: category.data.filter((product) => {
+              const titleMatch = product.title
+                .toLowerCase()
+                .includes((filters.title ?? '').toLowerCase());
+
+              if (filters.isNew) {
+                return titleMatch && product.isNew;
+              }
+
+              return titleMatch;
+            }),
+          }))
           .filter((category) => category.data.length)
       : null;
 
-    return newFilteredProducts;
-  };
-
-  const filterProductsByIsNewField = (
-    products: IProductCategory[] | null,
-    isNew: boolean
-  ) => {
-    const newFilteredProducts = products
-      ? products
-          .map((category) => {
-            return {
-              ...category,
-              data: category.data.filter((product) =>
-                isNew ? product.isNew : product
-              ),
-            };
-          })
-          .filter((category) => category.data.length)
-      : null;
-
-    return newFilteredProducts;
+    setFilteredProducts(newFilteredProducts);
   };
 
   const onToggleIsModalOpened = (isOpened: boolean) =>
@@ -137,7 +100,12 @@ const ProductsScreen = () => {
     setIsFilterModalOpened(isOpened);
 
   const onApplyFilters = (isNew: boolean) => {
-    setFilters((filters) => ({ ...filters, isNew }));
+    setFilters((filters) => {
+      const newFilters = { ...filters, isNew };
+
+      filterProducts(newFilters);
+      return newFilters;
+    });
   };
 
   return (
