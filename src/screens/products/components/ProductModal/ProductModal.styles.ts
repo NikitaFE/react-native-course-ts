@@ -10,14 +10,19 @@ export const styles = StyleSheet.create({
   },
   modal: {
     alignItems: 'center',
-    width: 160,
     padding: 20,
     backgroundColor: COLORS.white,
     borderRadius: 12,
   },
   title: {
+    alignSelf: 'flex-start',
     marginBottom: 16,
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: '700',
+  },
+  slide: {
+    width: 300,
+    height: 600,
+    alignSelf: 'center',
   },
 });

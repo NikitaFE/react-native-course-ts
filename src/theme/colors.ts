@@ -8,4 +8,6 @@ export const COLORS = {
   blue: '#00a8ff',
   modalOverlay: 'rgba(0, 0, 0, 0.2)',
   placeholder: '#b2bec3',
+  blueberrySoda: '#7f8fa6',
+  blueNights: '#353b48',
 };

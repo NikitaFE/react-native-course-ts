@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { styles } from './ProductsScreen.styles';
-import { mockedProducts } from '../../../data';
+import {
+  additionalMockedProducts,
+  mockedPizza,
+  mockedProducts,
+} from '../../../data';
 import { IProductCategory } from '../../../types/IProductCategory';
 import { COLORS } from '../../../theme/colors';
 import ProductList from '../components/ProductList/ProductList';
@@ -14,11 +18,14 @@ const ProductsScreen = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isFilterModalOpened, setIsFilterModalOpened] = useState(false);
   const [isProductsLoading, setIsProductsLoading] = useState(false);
+  const [isAdditionalProductsLoading, setIsAdditionalProductsLoading] =
+    useState(false);
   const [products, setProducts] = useState<IProductCategory[] | null>(null);
   const [filteredProducts, setFilteredProducts] = useState<
     IProductCategory[] | null
   >(null);
   const [filters, setFilters] = useState<IProductFilters>({});
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     setIsProductsLoading(true);
@@ -108,6 +115,43 @@ const ProductsScreen = () => {
     });
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    const timeoutId = setTimeout(() => {
+      if (products) {
+        const newProducts = products.map((category) => {
+          return category.id === 1
+            ? category.data.find((product) => product.id === 1)
+              ? category
+              : { ...category, data: [mockedPizza, ...category.data] }
+            : category;
+        });
+
+        setProducts(newProducts);
+        setFilteredProducts(newProducts);
+        setFilters({});
+      }
+      setRefreshing(false);
+      clearTimeout(timeoutId);
+    }, 2000);
+  }, [products]);
+
+  const onEndReached = () => {
+    setIsAdditionalProductsLoading(true);
+
+    const timeoutId = setTimeout(() => {
+      if ((products?.length ?? 0) < 4) {
+        const newProducts = [...(products ?? []), ...additionalMockedProducts];
+        setProducts(newProducts);
+        setFilteredProducts(newProducts);
+        setFilters({});
+      }
+
+      setIsAdditionalProductsLoading(false);
+      clearTimeout(timeoutId);
+    }, 2000);
+  };
+
   return (
     <View style={styles.container}>
       <ProductSearch
@@ -121,9 +165,17 @@ const ProductsScreen = () => {
         </View>
       ) : (
         <ProductList
+          refreshing={refreshing}
           products={filteredProducts}
+          onRefresh={onRefresh}
+          onEndReached={onEndReached}
           onToggleIsFavorite={onToggleIsFavorite}
         />
+      )}
+      {isAdditionalProductsLoading && (
+        <View style={styles.bottomLoader}>
+          <ActivityIndicator size="large" color={COLORS.blue} />
+        </View>
       )}
       <ProductModal
         isOpened={isModalOpened}
