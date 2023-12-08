@@ -10,4 +10,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  bottomLoader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 100,
+  },
 });
