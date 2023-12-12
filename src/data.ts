@@ -1,5 +1,5 @@
+import { CategoriesNamesEnum } from './types/CategoriesNames.enum';
 import { IAdvSlide } from './types/IAdvSlide';
-import { IProduct } from './types/IProduct';
 import { IProductCategory } from './types/IProductCategory';
 
 export const mockedSlides: IAdvSlide[] = [
@@ -12,7 +12,7 @@ export const mockedSlides: IAdvSlide[] = [
   {
     id: '2',
     image:
-      'https://cdn3.vectorstock.com/i/1000x1000/43/52/pizza-ads-poster-sliced-delicious-tasty-vector-30234352.jpg',
+      'https://www.mdpi.com/foods/foods-09-00051/article_deploy/html/images/foods-09-00051-g0A2.png',
     link: 'https://www.mcdonalds.com/ua/uk-ua.html',
   },
   {
@@ -32,8 +32,16 @@ export const mockedSlides: IAdvSlide[] = [
 export const mockedProducts: IProductCategory[] = [
   {
     id: 1,
-    title: 'Pizza',
+    title: CategoriesNamesEnum.PIZZA,
     data: [
+      {
+        id: 1,
+        title: 'Margherita',
+        price: 29.95,
+        description: 'Tomato sauce and mozzarella.',
+        picture: 'https://www.dominos-pizza.ro/gallery/fmobile/1632ipar.png',
+        isInFavorite: false,
+      },
       {
         id: 2,
         title: 'Toscana',
@@ -74,11 +82,58 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
         isNew: true,
       },
+      {
+        id: 6,
+        title: 'Quattro Formaggi',
+        price: 42.95,
+        description:
+          'Tomato Sauce, Mozzarella, Gorgonzola, Parmesan, and Goat Cheese.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 7,
+        title: 'Vegetariana',
+        price: 38.95,
+        description:
+          'Tomato Sauce, Mozzarella, Bell Peppers, Red Onions, Mushrooms, and Black Olives.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
+      {
+        id: 8,
+        title: 'Capricciosa',
+        price: 41.95,
+        description:
+          'Tomato Sauce, Mozzarella, Ham, Artichokes, Mushrooms, and Black Olives.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 9,
+        title: 'Calzone',
+        price: 44.95,
+        description:
+          'Folded Pizza with Tomato Sauce, Mozzarella, Ricotta, Ham, and Mushrooms.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 10,
+        title: 'Diavola',
+        price: 45.95,
+        description:
+          'Tomato Sauce, Mozzarella, Spicy Salami, Red Chilies, and Olives.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
     ],
   },
   {
     id: 2,
-    title: 'Salads',
+    title: CategoriesNamesEnum.SALADS,
     data: [
       {
         id: 1,
@@ -118,14 +173,58 @@ export const mockedProducts: IProductCategory[] = [
         picture: 'https://www.dominos-pizza.ro/gallery/fmobile/4097ipar.png',
         isInFavorite: false,
       },
+      {
+        id: 5,
+        title: 'Mediterranean',
+        price: 21.95,
+        description:
+          'Bollero mix salad, feta cheese, red onion, kalamata olives, tomatoes, and Greek dressing.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
+      {
+        id: 6,
+        title: 'Spinach and Strawberry',
+        price: 23.95,
+        description:
+          'Fresh spinach, sliced strawberries, feta cheese, almonds, and balsamic vinaigrette.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 7,
+        title: 'Caprese',
+        price: 22.95,
+        description:
+          'Fresh tomatoes, mozzarella cheese, basil, and balsamic glaze.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 8,
+        title: 'Chicken Avocado',
+        price: 26.95,
+        description:
+          'Grilled chicken, avocado, mixed greens, cherry tomatoes, and honey mustard dressing.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 9,
+        title: 'Cobb',
+        price: 25.95,
+        description:
+          'Mixed greens, grilled chicken, bacon, eggs, tomatoes, blue cheese, and ranch dressing.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
     ],
   },
-];
-
-export const additionalMockedProducts: IProductCategory[] = [
   {
     id: 3,
-    title: 'Pasta',
+    title: CategoriesNamesEnum.PASTA,
     data: [
       {
         id: 1,
@@ -169,11 +268,56 @@ export const additionalMockedProducts: IProductCategory[] = [
         isInFavorite: false,
         isNew: true,
       },
+      {
+        id: 6,
+        title: 'Linguine Pesto',
+        price: 21.95,
+        description: 'Linguine pasta with fresh basil pesto sauce.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 7,
+        title: 'Chicken Marsala Fettuccine',
+        price: 25.95,
+        description:
+          'Fettuccine pasta with tender chicken in Marsala wine sauce.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
+      {
+        id: 8,
+        title: 'Shrimp Scampi Linguine',
+        price: 28.95,
+        description:
+          'Linguine pasta with succulent shrimp in garlic and butter sauce.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 9,
+        title: 'Vegetarian Penne',
+        price: 19.95,
+        description:
+          'Penne pasta with a variety of fresh vegetables in tomato sauce.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 10,
+        title: 'Creamy Mushroom Rigatoni',
+        price: 23.95,
+        description: 'Rigatoni pasta in a creamy mushroom sauce.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
     ],
   },
   {
     id: 4,
-    title: 'Burgers',
+    title: CategoriesNamesEnum.BURGER,
     data: [
       {
         id: 1,
@@ -192,15 +336,71 @@ export const additionalMockedProducts: IProductCategory[] = [
         isInFavorite: false,
         isNew: true,
       },
+      {
+        id: 3,
+        title: 'Bacon Deluxe',
+        price: 16.95,
+        description:
+          'Deluxe burger with crispy bacon, cheddar cheese, and special sauce.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 4,
+        title: 'Spicy Jalapeno Burger',
+        price: 15.95,
+        description:
+          'Spicy burger topped with jalapenos, pepper jack cheese, and chipotle mayo.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
+      {
+        id: 5,
+        title: 'Mushroom Swiss Burger',
+        price: 17.95,
+        description:
+          'Burger with sautéed mushrooms, Swiss cheese, and truffle aioli.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 6,
+        title: 'BBQ Ranch Burger',
+        price: 18.95,
+        description:
+          'Burger smothered in BBQ sauce, ranch dressing, and crispy onion straws.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 7,
+        title: 'Double Bacon Cheeseburger',
+        price: 20.95,
+        description:
+          'Double patty burger with bacon, American cheese, and pickles.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
+      {
+        id: 8,
+        title: 'Avocado Turkey Burger',
+        price: 16.95,
+        description: 'Turkey burger with avocado, lettuce, and cranberry mayo.',
+        picture: '',
+        isInFavorite: false,
+      },
+      {
+        id: 9,
+        title: 'Blue Cheese Burger',
+        price: 19.95,
+        description:
+          'Burger with tangy blue cheese, caramelized onions, and arugula.',
+        picture: '',
+        isInFavorite: false,
+        isNew: true,
+      },
     ],
   },
 ];
-
-export const mockedPizza: IProduct = {
-  id: 1,
-  title: 'Margherita',
-  price: 29.95,
-  description: 'Tomato sauce and mozzarella.',
-  picture: 'https://www.dominos-pizza.ro/gallery/fmobile/1632ipar.png',
-  isInFavorite: false,
-};

@@ -1,61 +1,37 @@
 import { FC } from 'react';
-import { IProductCategory } from '../../../../types/IProductCategory';
-import {
-  ListRenderItem,
-  RefreshControl,
-  SectionList,
-  SectionListData,
-  SectionListRenderItem,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, ListRenderItem, Text, View } from 'react-native';
 import { styles } from './ProductList.styles';
 import Product from '../Product/Product';
 import { IProduct } from '../../../../types/IProduct';
 
 type ProductListProps = {
-  products: IProductCategory[] | null;
-  refreshing: boolean;
-  onRefresh: () => void;
+  products: IProduct[] | null;
   onEndReached: () => void;
-  onToggleIsFavorite: (categoryId: number, productId: number) => void;
+  onToggleIsFavorite: (productId: number) => void;
+  onNavigateToProduct: (product: IProduct) => void;
 };
 
 const ProductList: FC<ProductListProps> = ({
   products,
-  refreshing,
-  onRefresh,
   onEndReached,
   onToggleIsFavorite,
+  onNavigateToProduct,
 }) => {
-  const renderItem: SectionListRenderItem<IProduct, IProductCategory> = (
-    item
-  ) => (
+  const renderItem: ListRenderItem<IProduct> = (item) => (
     <Product
       product={item.item}
-      categoryId={item.section.id}
+      onNavigateToProduct={onNavigateToProduct}
       onToggleIsFavorite={onToggleIsFavorite}
     />
   );
 
-  const renderSectionHeader = ({
-    section: { title },
-  }: {
-    section: SectionListData<IProduct, IProductCategory>;
-  }) => <Text style={styles.categoryTitle}>{title}</Text>;
-
   return products?.length ? (
     <View style={styles.productsWrapper}>
-      <SectionList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+      <FlatList
         style={styles.productList}
-        sections={products}
+        data={products}
         keyExtractor={(item) => `${item.id}`}
         renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-        stickySectionHeadersEnabled={false}
         onEndReached={onEndReached}
       />
     </View>

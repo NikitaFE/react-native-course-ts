@@ -21,9 +21,7 @@ const ProductSearch: FC<ProductSearchProps> = ({
   onFilterModalOpen,
 }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [isSearchOpened, setIsSearchOpened] = useState(false);
 
-  const toggleSearchField = () => setIsSearchOpened(!isSearchOpened);
   const onChange = (value: string) => {
     setSearchValue(value);
     onSearchValueChange(value);
@@ -34,23 +32,19 @@ const ProductSearch: FC<ProductSearchProps> = ({
 
   return (
     <View style={styles.wrapper}>
-      {isSearchOpened && (
-        <Input
-          outerStyles={styles.searchInput}
-          value={searchValue}
-          placeholder="Search"
-          onChangeText={onChange}
-        />
-      )}
+      <Input
+        outerStyles={styles.searchInput}
+        value={searchValue}
+        placeholder="Search"
+        icon={<SvgXml xml={searchSvg} width={24} height={24} />}
+        onChangeText={onChange}
+      />
       <View style={styles.buttons}>
         <CustomTouchable onPress={onOpenFilterModal}>
           <SvgXml xml={filterSvg} width={24} height={24} />
         </CustomTouchable>
         <CustomTouchable onPress={onOpenModal}>
           <SvgXml xml={heartEmptySvg} width={24} height={24} />
-        </CustomTouchable>
-        <CustomTouchable onPress={toggleSearchField}>
-          <SvgXml xml={searchSvg} width={24} height={24} />
         </CustomTouchable>
       </View>
     </View>

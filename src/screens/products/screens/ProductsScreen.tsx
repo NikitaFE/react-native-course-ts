@@ -1,38 +1,47 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { SvgXml } from 'react-native-svg';
+import type { DrawerScreenProps } from '@react-navigation/drawer';
 import { styles } from './ProductsScreen.styles';
-import {
-  additionalMockedProducts,
-  mockedPizza,
-  mockedProducts,
-} from '../../../data';
-import { IProductCategory } from '../../../types/IProductCategory';
 import { COLORS } from '../../../theme/colors';
 import ProductList from '../components/ProductList/ProductList';
 import ProductSearch from '../components/ProductSearch/ProductSearch';
 import ProductModal from '../components/ProductModal/ProductModal';
 import FilterModal from '../components/FilterModal/FilterModal';
 import { IProductFilters } from '../../../types/IProductFilters';
+import { IProduct } from '../../../types/IProduct';
+import { NavigationNames } from '../../../types/NavigationNames.enum';
+import { CategoriesNamesEnum } from '../../../types/CategoriesNames.enum';
+import { ProductsStackParamList } from '../../../types/ProductsStackParamList.type';
+import CustomTouchable from '../../../components/CustomTouchable/CustomTouchable';
+import menuIcon from '../../../assets/menu.svg';
 
-const ProductsScreen = () => {
+type ProductsScreenProps = DrawerScreenProps<
+  ProductsStackParamList,
+  CategoriesNamesEnum
+>;
+
+const ProductsScreen: FC<ProductsScreenProps> = ({ navigation, route }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isFilterModalOpened, setIsFilterModalOpened] = useState(false);
   const [isProductsLoading, setIsProductsLoading] = useState(false);
   const [isAdditionalProductsLoading, setIsAdditionalProductsLoading] =
     useState(false);
-  const [products, setProducts] = useState<IProductCategory[] | null>(null);
-  const [filteredProducts, setFilteredProducts] = useState<
-    IProductCategory[] | null
-  >(null);
+  const [products, setProducts] = useState<IProduct[] | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | null>(
+    null
+  );
   const [filters, setFilters] = useState<IProductFilters>({});
-  const [refreshing, setRefreshing] = useState(false);
+  const { title: categoryTitle, data } = route.params.category;
 
   useEffect(() => {
     setIsProductsLoading(true);
 
+    const initialProducts = data.slice(0, 4);
+
     const timerId = setTimeout(() => {
-      setProducts(mockedProducts);
-      setFilteredProducts(mockedProducts);
+      setProducts(initialProducts);
+      setFilteredProducts(initialProducts);
       setIsProductsLoading(false);
     }, 3000);
 
@@ -54,23 +63,14 @@ const ProductsScreen = () => {
     });
   };
 
-  const onToggleIsFavorite = (categoryId: number, productId: number) => {
+  const onToggleIsFavorite = (productId: number) => {
     const newFilteredProducts = filteredProducts
-      ? filteredProducts.map((category) => {
-          if (category.id === categoryId) {
-            return {
-              ...category,
-              data: category.data.map((product) => {
-                if (product.id === productId) {
-                  return { ...product, isInFavorite: !product.isInFavorite };
-                }
-
-                return product;
-              }),
-            };
+      ? filteredProducts.map((product) => {
+          if (product.id === productId) {
+            return { ...product, isInFavorite: !product.isInFavorite };
           }
 
-          return category;
+          return product;
         })
       : null;
 
@@ -79,22 +79,17 @@ const ProductsScreen = () => {
 
   const filterProducts = (filters: IProductFilters) => {
     const newFilteredProducts = products
-      ? products
-          .map((category) => ({
-            ...category,
-            data: category.data.filter((product) => {
-              const titleMatch = product.title
-                .toLowerCase()
-                .includes((filters.title ?? '').toLowerCase());
+      ? products.filter((product) => {
+          const titleMatch = product.title
+            .toLowerCase()
+            .includes((filters.title ?? '').toLowerCase());
 
-              if (filters.isNew) {
-                return titleMatch && product.isNew;
-              }
+          if (filters.isNew) {
+            return titleMatch && product.isNew;
+          }
 
-              return titleMatch;
-            }),
-          }))
-          .filter((category) => category.data.length)
+          return titleMatch;
+        })
       : null;
 
     setFilteredProducts(newFilteredProducts);
@@ -115,48 +110,36 @@ const ProductsScreen = () => {
     });
   };
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    const timeoutId = setTimeout(() => {
-      if (products) {
-        const newProducts = products.map((category) => {
-          return category.id === 1
-            ? category.data.find((product) => product.id === 1)
-              ? category
-              : { ...category, data: [mockedPizza, ...category.data] }
-            : category;
-        });
-
-        setProducts(newProducts);
-        setFilteredProducts(newProducts);
-        setFilters({});
-      }
-      setRefreshing(false);
-      clearTimeout(timeoutId);
-    }, 2000);
-  }, [products]);
-
   const onEndReached = () => {
+    if (products?.length === data.length) return;
+
     setIsAdditionalProductsLoading(true);
 
     const timeoutId = setTimeout(() => {
-      if ((products?.length ?? 0) < 4) {
-        const newProducts = [...(products ?? []), ...additionalMockedProducts];
-        setProducts(newProducts);
-        setFilteredProducts(newProducts);
-        setFilters({});
-      }
+      setProducts(data);
+      setFilteredProducts(data);
+      setFilters({});
 
       setIsAdditionalProductsLoading(false);
       clearTimeout(timeoutId);
     }, 2000);
   };
 
+  const navigateToProduct = (product: IProduct) =>
+    navigation.navigate(NavigationNames.PRODUCT, { product });
+
+  const openFavorites = () => navigation.navigate(NavigationNames.FAVORITES);
+
+  const openDrawer = () => navigation.openDrawer();
+
   return (
     <View style={styles.container}>
+      <CustomTouchable outerStyles={styles.drawerButton} onPress={openDrawer}>
+        <SvgXml xml={menuIcon} width={32} height={32} fill={COLORS.white} />
+      </CustomTouchable>
       <ProductSearch
         onSearchValueChange={onSearchValueChange}
-        onModalOpen={onToggleIsModalOpened}
+        onModalOpen={openFavorites}
         onFilterModalOpen={onToggleIsFilterModalOpened}
       />
       {isProductsLoading || !products ? (
@@ -164,13 +147,15 @@ const ProductsScreen = () => {
           <ActivityIndicator size="large" color={COLORS.blue} />
         </View>
       ) : (
-        <ProductList
-          refreshing={refreshing}
-          products={filteredProducts}
-          onRefresh={onRefresh}
-          onEndReached={onEndReached}
-          onToggleIsFavorite={onToggleIsFavorite}
-        />
+        <>
+          <Text style={styles.categoryTitle}>{categoryTitle}</Text>
+          <ProductList
+            products={filteredProducts}
+            onEndReached={onEndReached}
+            onToggleIsFavorite={onToggleIsFavorite}
+            onNavigateToProduct={navigateToProduct}
+          />
+        </>
       )}
       {isAdditionalProductsLoading && (
         <View style={styles.bottomLoader}>

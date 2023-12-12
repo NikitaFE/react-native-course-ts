@@ -10,4 +10,5 @@ export const COLORS = {
   placeholder: '#b2bec3',
   blueberrySoda: '#7f8fa6',
   blueNights: '#353b48',
+  lightGray: '#dcdde1',
 };

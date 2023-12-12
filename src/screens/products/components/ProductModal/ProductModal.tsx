@@ -2,7 +2,6 @@ import { FC } from 'react';
 import {
   Alert,
   Dimensions,
-  FlatList,
   Image,
   ListRenderItem,
   Modal,
