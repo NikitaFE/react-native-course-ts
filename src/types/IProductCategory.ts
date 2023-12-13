@@ -1,7 +1,8 @@
+import { CategoriesNamesEnum } from './CategoriesNames.enum';
 import { IProduct } from './IProduct';
 
 export interface IProductCategory {
   id: number;
-  title: string;
+  title: CategoriesNamesEnum;
   data: IProduct[];
 }

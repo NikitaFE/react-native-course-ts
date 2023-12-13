@@ -10,11 +10,6 @@ export const styles = StyleSheet.create({
   productList: {
     overflow: 'visible',
   },
-  categoryTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: 12,
-  },
   empty: {
     textAlign: 'center',
   },

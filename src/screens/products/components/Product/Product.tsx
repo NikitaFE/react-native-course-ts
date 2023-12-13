@@ -11,19 +11,22 @@ import CustomTouchable from '../../../../components/CustomTouchable/CustomToucha
 
 type ProductProps = {
   product: IProduct;
-  categoryId: number;
-  onToggleIsFavorite: (categoryId: number, productId: number) => void;
+  onNavigateToProduct: (product: IProduct) => void;
+  onToggleIsFavorite: (productId: number) => void;
 };
 
 const Product: FC<ProductProps> = ({
   product,
-  categoryId,
+  onNavigateToProduct,
   onToggleIsFavorite,
 }) => {
   const { id, picture, title, price, description, isInFavorite } = product;
 
   return (
-    <View style={styles.product}>
+    <CustomTouchable
+      outerStyles={styles.product}
+      onPress={() => onNavigateToProduct(product)}
+    >
       <View>
         <Image
           style={styles.image}
@@ -40,7 +43,7 @@ const Product: FC<ProductProps> = ({
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
-          <CustomTouchable onPress={() => onToggleIsFavorite(categoryId, id)}>
+          <CustomTouchable onPress={() => onToggleIsFavorite(id)}>
             <SvgXml
               xml={isInFavorite ? heartSvg : heartEmptySvg}
               width={28}
@@ -68,7 +71,7 @@ const Product: FC<ProductProps> = ({
           </CustomTouchable>
         </View>
       </View>
-    </View>
+    </CustomTouchable>
   );
 };
 
