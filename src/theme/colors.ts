@@ -11,4 +11,5 @@ export const COLORS = {
   blueberrySoda: '#7f8fa6',
   blueNights: '#353b48',
   lightGray: '#dcdde1',
+  nonActiveBackground: '#f0f0f0',
 };
