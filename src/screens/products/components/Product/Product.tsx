@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Alert, Image, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { observer } from 'mobx-react-lite';
 import { styles } from './Product.styles';
 import productImagePlaceholder from '../../../../assets/product-placeholder.jpeg';
 import heartSvg from '../../../../assets/heart.svg';
@@ -8,11 +9,12 @@ import heartEmptySvg from '../../../../assets/heart-empty.svg';
 import cartSvg from '../../../../assets/cart.svg';
 import { IProduct } from '../../../../types/IProduct';
 import CustomTouchable from '../../../../components/CustomTouchable/CustomTouchable';
+import cartStore from '../../../cart/store/cartStore';
 
 type ProductProps = {
   product: IProduct;
   onNavigateToProduct: (product: IProduct) => void;
-  onToggleIsFavorite: (productId: number) => void;
+  onToggleIsFavorite: (productId: string) => void;
 };
 
 const Product: FC<ProductProps> = ({
@@ -21,6 +23,8 @@ const Product: FC<ProductProps> = ({
   onToggleIsFavorite,
 }) => {
   const { id, picture, title, price, description, isInFavorite } = product;
+
+  const onAddToCart = () => cartStore.addToCart(product);
 
   return (
     <CustomTouchable
@@ -61,9 +65,7 @@ const Product: FC<ProductProps> = ({
           <Text style={styles.description} numberOfLines={1}>
             {description}
           </Text>
-          <CustomTouchable
-            onPress={() => Alert.alert(`${title} successfully added to cart!`)}
-          >
+          <CustomTouchable onPress={onAddToCart}>
             <View style={styles.buyButton}>
               <Text style={styles.buyText}>Buy</Text>
               <SvgXml xml={cartSvg} width={20} height={20} />
@@ -75,4 +77,4 @@ const Product: FC<ProductProps> = ({
   );
 };
 
-export default Product;
+export default observer(Product);
