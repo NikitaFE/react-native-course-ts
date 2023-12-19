@@ -8,7 +8,7 @@ import { styles } from './CustomTouchable.styles';
 import { COLORS } from '../../theme/colors';
 
 type CustomTouchableProps = {
-  outerStyles?: ViewStyle;
+  outerStyles?: ViewStyle | ViewStyle[];
   androidRipple?: PressableAndroidRippleConfig;
   onPress: () => void;
 };

@@ -35,7 +35,7 @@ export const mockedProducts: IProductCategory[] = [
     title: CategoriesNamesEnum.PIZZA,
     data: [
       {
-        id: 1,
+        id: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
         title: 'Margherita',
         price: 29.95,
         description: 'Tomato sauce and mozzarella.',
@@ -43,7 +43,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 2,
+        id: 'b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q',
         title: 'Toscana',
         price: 39.95,
         oldPrice: 43.95,
@@ -53,7 +53,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 3,
+        id: 'c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8',
         title: 'Bascaiola',
         price: 39.95,
         description:
@@ -63,7 +63,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 4,
+        id: 'd4e5f6g7-h8i9-j0k1l2-m3n4o5p6q7r8s9',
         title: "Domino's Classic",
         price: 40.95,
         description:
@@ -72,7 +72,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 5,
+        id: 'e5f6g7h8-i9j0-k1l2m3n4o5-p6q7r8s9t0',
         title: 'Salsiccia',
         price: 40.95,
         oldPrice: 45.95,
@@ -83,7 +83,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 6,
+        id: 'f6g7h8i9-j0k1-l2m3n4o5p6-q7r8s9t0u1',
         title: 'Quattro Formaggi',
         price: 42.95,
         description:
@@ -92,7 +92,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 7,
+        id: 'g7h8i9j0-k1l2-m3n4o5p6q7r8-s9t0u1v2w3x4',
         title: 'Vegetariana',
         price: 38.95,
         description:
@@ -102,7 +102,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 8,
+        id: 'h8i9j0k1-l2m3-n4o5p6q7r8s9-t0u1v2w3x4y5z6',
         title: 'Capricciosa',
         price: 41.95,
         description:
@@ -111,7 +111,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 9,
+        id: 'i9j0k1l2-m3n4o5-p6q7r8s9t0u1-v2w3x4y5z6a1b2c3',
         title: 'Calzone',
         price: 44.95,
         description:
@@ -120,7 +120,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 10,
+        id: 'j0k1l2m3n4o5p6-q7r8s9t0u1-v2w3x4y5z6a1b2c3d4',
         title: 'Diavola',
         price: 45.95,
         description:
@@ -136,7 +136,7 @@ export const mockedProducts: IProductCategory[] = [
     title: CategoriesNamesEnum.SALADS,
     data: [
       {
-        id: 1,
+        id: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
         title: 'Veggie',
         price: 17.95,
         oldPrice: 20.95,
@@ -146,7 +146,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 2,
+        id: 'b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q',
         title: 'Caesar',
         price: 27.95,
         description:
@@ -155,7 +155,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 3,
+        id: 'c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8',
         title: 'Greek',
         price: 17.95,
         description:
@@ -165,7 +165,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 4,
+        id: 'd4e5f6g7-h8i9-j0k1l2-m3n4o5p6q7r8s9',
         title: 'Domino’s',
         price: 27.95,
         description:
@@ -174,7 +174,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 5,
+        id: 'e5f6g7h8-i9j0-k1l2m3n4o5-p6q7r8s9t0',
         title: 'Mediterranean',
         price: 21.95,
         description:
@@ -184,7 +184,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 6,
+        id: 'f6g7h8i9-j0k1-l2m3n4o5p6-q7r8s9t0u1',
         title: 'Spinach and Strawberry',
         price: 23.95,
         description:
@@ -193,7 +193,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 7,
+        id: 'g7h8i9j0-k1l2-m3n4o5p6q7r8-s9t0u1v2w3x4',
         title: 'Caprese',
         price: 22.95,
         description:
@@ -202,7 +202,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 8,
+        id: 'h8i9j0k1-l2m3-n4o5p6q7r8s9-t0u1v2w3x4y5z6',
         title: 'Chicken Avocado',
         price: 26.95,
         description:
@@ -211,7 +211,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 9,
+        id: 'i9j0k1l2-m3n4o5-p6q7r8s9t0u1-v2w3x4y5z6a1b2c3',
         title: 'Cobb',
         price: 25.95,
         description:
@@ -227,7 +227,7 @@ export const mockedProducts: IProductCategory[] = [
     title: CategoriesNamesEnum.PASTA,
     data: [
       {
-        id: 1,
+        id: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
         title: 'Spaghetti Bolognese',
         price: 19.95,
         description: 'Classic Italian pasta with rich meat sauce.',
@@ -235,7 +235,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 2,
+        id: 'b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q',
         title: 'Alfredo Fettuccine',
         price: 22.95,
         description: 'Creamy Alfredo sauce served over fettuccine pasta.',
@@ -244,7 +244,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 3,
+        id: 'c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8',
         title: 'Carbonara',
         price: 24.95,
         description: 'Pasta with eggs, cheese, bacon, and black pepper.',
@@ -252,7 +252,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 4,
+        id: 'd4e5f6g7-h8i9-j0k1l2-m3n4o5p6q7r8s9',
         title: 'Spaghetti Bolognese',
         price: 18.95,
         description: 'Classic spaghetti with Bolognese sauce.',
@@ -260,7 +260,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 5,
+        id: 'e5f6g7h8-i9j0-k1l2m3n4o5-p6q7r8s9t0',
         title: 'Penne Alfredo',
         price: 20.95,
         description: 'Penne pasta in creamy Alfredo sauce.',
@@ -269,7 +269,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 6,
+        id: 'f6g7h8i9-j0k1-l2m3n4o5p6-q7r8s9t0u1',
         title: 'Linguine Pesto',
         price: 21.95,
         description: 'Linguine pasta with fresh basil pesto sauce.',
@@ -277,7 +277,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 7,
+        id: 'g7h8i9j0-k1l2-m3n4o5p6q7r8-s9t0u1v2w3x4',
         title: 'Chicken Marsala Fettuccine',
         price: 25.95,
         description:
@@ -287,7 +287,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 8,
+        id: 'h8i9j0k1-l2m3-n4o5p6q7r8s9-t0u1v2w3x4y5z6',
         title: 'Shrimp Scampi Linguine',
         price: 28.95,
         description:
@@ -296,7 +296,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 9,
+        id: 'i9j0k1l2-m3n4o5-p6q7r8s9t0u1-v2w3x4y5z6a1b2c3',
         title: 'Vegetarian Penne',
         price: 19.95,
         description:
@@ -305,7 +305,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 10,
+        id: 'j0k1l2m3-n4o5-p6q7r8s9-t0u1v2w3x4y5z6a1b2',
         title: 'Creamy Mushroom Rigatoni',
         price: 23.95,
         description: 'Rigatoni pasta in a creamy mushroom sauce.',
@@ -320,7 +320,7 @@ export const mockedProducts: IProductCategory[] = [
     title: CategoriesNamesEnum.BURGER,
     data: [
       {
-        id: 1,
+        id: 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6',
         title: 'Classic Cheeseburger',
         price: 14.95,
         description: 'Juicy beef patty with melted cheese and fresh veggies.',
@@ -328,7 +328,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 2,
+        id: 'b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q',
         title: 'Veggie Burger',
         price: 12.95,
         description: 'Plant-based patty with lettuce, tomato, and vegan mayo.',
@@ -337,7 +337,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 3,
+        id: 'c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8',
         title: 'Bacon Deluxe',
         price: 16.95,
         description:
@@ -346,7 +346,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 4,
+        id: 'd4e5f6g7-h8i9-j0k1l2-m3n4o5p6q7r8s9',
         title: 'Spicy Jalapeno Burger',
         price: 15.95,
         description:
@@ -356,7 +356,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 5,
+        id: 'e5f6g7h8-i9j0-k1l2m3n4o5-p6q7r8s9t0',
         title: 'Mushroom Swiss Burger',
         price: 17.95,
         description:
@@ -365,7 +365,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 6,
+        id: 'f6g7h8i9-j0k1-l2m3n4o5p6-q7r8s9t0u1',
         title: 'BBQ Ranch Burger',
         price: 18.95,
         description:
@@ -374,7 +374,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 7,
+        id: 'g7h8i9j0-k1l2-m3n4o5p6q7r8-s9t0u1v2w3x4',
         title: 'Double Bacon Cheeseburger',
         price: 20.95,
         description:
@@ -384,7 +384,7 @@ export const mockedProducts: IProductCategory[] = [
         isNew: true,
       },
       {
-        id: 8,
+        id: 'h8i9j0k1-l2m3-n4o5p6q7r8s9-t0u1v2w3x4y5z6',
         title: 'Avocado Turkey Burger',
         price: 16.95,
         description: 'Turkey burger with avocado, lettuce, and cranberry mayo.',
@@ -392,7 +392,7 @@ export const mockedProducts: IProductCategory[] = [
         isInFavorite: false,
       },
       {
-        id: 9,
+        id: 'i9j0k1l2-m3n4o5-p6q7r8s9t0u1-v2w3x4y5z6a1b2c3',
         title: 'Blue Cheese Burger',
         price: 19.95,
         description:

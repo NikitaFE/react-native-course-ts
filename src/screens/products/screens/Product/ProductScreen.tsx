@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Alert, Dimensions, Image, Text, View } from 'react-native';
+import { Dimensions, Image, Text, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { observer } from 'mobx-react-lite';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationNames } from '../../../../types/NavigationNames.enum';
 import { ProductsStackParamList } from '../../../../types/ProductsStackParamList.type';
@@ -9,6 +10,7 @@ import CustomTouchable from '../../../../components/CustomTouchable/CustomToucha
 import cartSvg from '../../../../assets/cart.svg';
 
 import { styles } from './ProductScreen.styles';
+import cartStore from '../../../cart/store/cartStore';
 
 type ProductScreenNavigationProp = NativeStackScreenProps<
   ProductsStackParamList,
@@ -20,6 +22,8 @@ const ProductScreen: FC<ProductScreenNavigationProp> = ({ route }) => {
   const imageSize = width - 32;
   const { product } = route.params;
   const { picture, title, description, price } = product;
+
+  const addProductToCart = () => cartStore.addToCart(product);
 
   return (
     <View style={styles.container}>
@@ -49,9 +53,7 @@ const ProductScreen: FC<ProductScreenNavigationProp> = ({ route }) => {
             <Text style={styles.oldPrice}>${product.oldPrice}</Text>
           )}
         </View>
-        <CustomTouchable
-          onPress={() => Alert.alert(`${title} successfully added to cart!`)}
-        >
+        <CustomTouchable onPress={addProductToCart}>
           <View style={styles.buyButton}>
             <Text style={styles.buyText}>Buy</Text>
             <SvgXml xml={cartSvg} width={24} height={24} />
@@ -62,4 +64,4 @@ const ProductScreen: FC<ProductScreenNavigationProp> = ({ route }) => {
   );
 };
 
-export default ProductScreen;
+export default observer(ProductScreen);

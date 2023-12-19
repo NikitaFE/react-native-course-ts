@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
@@ -63,7 +63,7 @@ const ProductsScreen: FC<ProductsScreenProps> = ({ navigation, route }) => {
     });
   };
 
-  const onToggleIsFavorite = (productId: number) => {
+  const onToggleIsFavorite = (productId: string) => {
     const newFilteredProducts = filteredProducts
       ? filteredProducts.map((product) => {
           if (product.id === productId) {

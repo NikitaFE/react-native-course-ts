@@ -7,7 +7,7 @@ import { IProduct } from '../../../../types/IProduct';
 type ProductListProps = {
   products: IProduct[] | null;
   onEndReached: () => void;
-  onToggleIsFavorite: (productId: number) => void;
+  onToggleIsFavorite: (productId: string) => void;
   onNavigateToProduct: (product: IProduct) => void;
 };
 

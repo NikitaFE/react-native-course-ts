@@ -3,5 +3,6 @@ export enum NavigationNames {
   PRODUCTS = 'Products',
   PRODUCT = 'Product',
   FAVORITES = 'FAVORITES',
+  CART = 'Cart',
   SETTINGS = 'Settings',
 }
