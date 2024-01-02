@@ -1,7 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { styles } from './ProductsScreen.styles';
 import { COLORS } from '../../../theme/colors';
 import ProductList from '../components/ProductList/ProductList';
@@ -32,16 +39,32 @@ const ProductsScreen: FC<ProductsScreenProps> = ({ navigation, route }) => {
     null
   );
   const [filters, setFilters] = useState<IProductFilters>({});
+  const scrollY = useSharedValue(0);
   const { title: categoryTitle, data } = route.params.category;
+
+  const animatedSearchBarStyles = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, 60], [1, 0]),
+    };
+  });
+
+  const animatedTitleStyles = useAnimatedStyle(() => {
+    return {
+      marginTop: interpolate(
+        scrollY.value,
+        [0, 60],
+        [0, -60],
+        Extrapolation.CLAMP
+      ),
+    };
+  });
 
   useEffect(() => {
     setIsProductsLoading(true);
 
-    const initialProducts = data.slice(0, 4);
-
     const timerId = setTimeout(() => {
-      setProducts(initialProducts);
-      setFilteredProducts(initialProducts);
+      setProducts(data);
+      setFilteredProducts(data);
       setIsProductsLoading(false);
     }, 3000);
 
@@ -132,28 +155,37 @@ const ProductsScreen: FC<ProductsScreenProps> = ({ navigation, route }) => {
 
   const openDrawer = () => navigation.openDrawer();
 
+  const updateScrollY = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
   return (
     <View style={styles.container}>
       <CustomTouchable outerStyles={styles.drawerButton} onPress={openDrawer}>
         <SvgXml xml={menuIcon} width={32} height={32} fill={COLORS.white} />
       </CustomTouchable>
-      <ProductSearch
-        onSearchValueChange={onSearchValueChange}
-        onModalOpen={openFavorites}
-        onFilterModalOpen={onToggleIsFilterModalOpened}
-      />
+      <Animated.View style={animatedSearchBarStyles}>
+        <ProductSearch
+          onSearchValueChange={onSearchValueChange}
+          onModalOpen={openFavorites}
+          onFilterModalOpen={onToggleIsFilterModalOpened}
+        />
+      </Animated.View>
       {isProductsLoading || !products ? (
         <View style={styles.loader}>
           <ActivityIndicator size="large" color={COLORS.blue} />
         </View>
       ) : (
         <>
-          <Text style={styles.categoryTitle}>{categoryTitle}</Text>
+          <Animated.Text style={[styles.categoryTitle, animatedTitleStyles]}>
+            {categoryTitle}
+          </Animated.Text>
           <ProductList
             products={filteredProducts}
             onEndReached={onEndReached}
             onToggleIsFavorite={onToggleIsFavorite}
             onNavigateToProduct={navigateToProduct}
+            onScrollChange={updateScrollY}
           />
         </>
       )}
